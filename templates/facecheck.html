@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+
+<main>
+  <div class="md-section">
+    <form method="post" accept="/facecheck/">
+                    {% csrf_token %}
+
+    <div id="container" align="center">
+      <div class="row">
+        <video
+          autoplay="true"
+          id="videoElement"
+          width="640"
+          height="340"
+        ></video>
+        <canvas
+          style="display:none;"
+          width="320"
+          height="240"
+          id="buffer"
+        ></canvas>
+      </div>
+
+      <input type="hidden" id="name" value="Zhouxin" />
+      <input type="hidden" id="id" value="001" />
+      <input type="submit" name="" value="Check Out">
+    </div>
+  </div>
+</form>
+
+</main>
+
+{% endblock content %} 
+
+{% block extra_scripts %}
+<script>
+  var video = document.querySelector("#videoElement");
+
+  if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then(function(stream) {
+        video.srcObject = stream;
+        console.log("success ajax");
+      })
+      .catch(function(error) {
+        console.log("Something went wrong!");
+      });
+  }
+</script><!-- 
+<script type="text/javascript">
+  Instascan.Camera.getCameras()
+    .then(function(cameras) {
+      if (cameras.length > 0) {
+        defaultCamera = cameras[0];
+        defaultCamera.start().then(function(stream) {
+          video.srcObject = stream;
+        });
+      }
+    })
+    .catch(function(err) {
+      console.error(err);
+    });
+
+  var btn = $("#bttn");
+  btn.on("click", function() {
+    var buffer = document.querySelector("#buffer");
+    var g = buffer.getContext("2d");
+    g.drawImage(video, 0, 0, 320, 240);
+    var dataUrl = buffer.toDataURL("image/webp");
+    var _id = $("#_id").val();
+
+    var data = { id: "001", photo: dataUrl };
+    $.ajax({
+      url: "/facecheck/",
+      type: "post",
+      beforeSend: function(xhr, setting) {
+        xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+      },
+      contentType: "application/json",
+      data: JSON.stringify(data),
+      success: function(ret) {
+        if (ret.ok) alert("Done!");
+      }
+    });
+  });
+</script> -->
+
+{% endblock extra_scripts %}

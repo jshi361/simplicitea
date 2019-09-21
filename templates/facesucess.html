@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+  <main >
+    <div class="md-section">
+    <div class="container wow fadeIn">
+      <div class="row">
+            <form method="GET" class="card-body">
+              {% csrf_token %}
+
+              <h3>You are not authorized</h3>
+
+            </form>
+
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+{% endblock content %}
+
+{% block extra_scripts %}
+
+{% endblock extra_scripts %}
